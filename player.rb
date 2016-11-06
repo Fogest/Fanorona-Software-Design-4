@@ -4,5 +4,14 @@ module Fanorona
       @name = name
       @spots = spots
     end
+
+    def makeMove(source, destination)
+
+    end
+
+    private
+    def makeCapture
+
+    end
   end
 end
