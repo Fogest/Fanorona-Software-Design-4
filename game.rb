@@ -9,7 +9,7 @@ module Fanorona
       @players = [Player.new(playerOneName, @spots), Player.new(playerTwoName, @spots)]
       @turn = rand(2) #TODO: Turn should start with the "white" player according to rules.
       @currentPlayer = @players[@turn]
-      @rules = Rule.new(1)
+      @rules = Rule.new(3)
 
       #TODO: Populate spot array with Spot objects and the Piece's to go in the correct spots for game start.
     end
