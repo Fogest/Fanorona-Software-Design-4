@@ -5,7 +5,8 @@ module Fanorona
     end
 
     def take
-      @piece, piece = nil, @piece
+      piece = @piece
+      @piece = nil
       piece
     end
 
