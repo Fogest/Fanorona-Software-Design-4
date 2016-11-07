@@ -4,7 +4,7 @@ require 'player'
 
 module Fanorona
   class Game
-    VALID_OPTIONS = ['move', 'display', 'exit']
+    VALID_OPTIONS = ['move', 'display', 'help', 'exit']
 
     def initialize(playerOneName, playerTwoName)
       @spots = Array.new(9) { Array.new(5) { Spot.new } }
@@ -16,9 +16,12 @@ module Fanorona
     end
 
     def startGame
-      until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
-        drawBoard
+      displayBoard
+      puts
+      displayOptions
+      puts
 
+      until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
         puts "#{@currentPlayer.instance_variable_get('@name')}'s turn"
 
         begin
@@ -77,13 +80,16 @@ module Fanorona
               # Only rotate to the next player if the player's move was valid and not a capture
               @turn = ~@turn
               @currentPlayer = @players[@turn]
+              displayBoard
             else
               puts 'Invalid move.'
             end
           when :display
-            next
+            displayBoard
+          when :help
+            displayOptions
           when :exit
-            puts 'Game is exiting.'
+            puts 'Goodbye thank you for playing.'
             exit
           else
         end
@@ -99,7 +105,16 @@ module Fanorona
       end
     end
 
-    def drawBoard
+    private
+    def displayOptions
+      puts 'Please choose a command'
+      puts 'move [x] [y] [direction] - Moves the piece at x, y in the given direction (one of n, ne, e, se, s, sw, w, nw)'
+      puts 'help                     - Displays the menu options'
+      puts 'display                  - Displays the game board'
+      puts 'exit                     - Exits the game'
+    end
+
+    def displayBoard
       diagDir = 0
       y = 0
 
