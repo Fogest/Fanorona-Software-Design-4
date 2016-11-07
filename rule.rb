@@ -5,7 +5,7 @@ module Fanorona
     end
 
     def checkMoveValidity(currentPlayer, source, destination)
-      if destination.isEmpty and source.lookAtPiece.getPlayer == currentPlayer
+      if (destination.isEmpty || destination.lookAtPiece.isCaptured) and source.lookAtPiece.getPlayer == currentPlayer
         #Piece is owned by current player, and the destination is empty.
         return true
       end

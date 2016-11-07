@@ -48,10 +48,6 @@ module Fanorona
       end
     end
 
-    def name
-      @name
-    end
-
     def makeMove(source, destination)
       source_loc = Array.new(2)
       dest_loc = Array.new(2)

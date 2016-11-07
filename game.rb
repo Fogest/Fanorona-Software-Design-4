@@ -19,7 +19,7 @@ module Fanorona
       until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
         drawBoard
 
-        puts "#{@currentPlayer.name}'s turn"
+        puts "#{@currentPlayer.instance_variable_get('@name')}'s turn"
 
         begin
           print '> '
@@ -65,8 +65,8 @@ module Fanorona
               targety += dirIncr[1]
             }
 
-            if targetx < 0 || targetx > 4 || targety < 0 || targety > 8
-              puts 'Invalid move.'
+            if targetx < 0 || targetx > 8 || targety < 0 || targety > 4
+              puts 'Invalid move out of bounds.'
               next
             end
 
@@ -78,7 +78,7 @@ module Fanorona
               @turn = ~@turn
               @currentPlayer = @players[@turn]
             else
-              puts 'Invalid move'
+              puts 'Invalid move.'
             end
           when :display
             next
@@ -91,7 +91,7 @@ module Fanorona
 
       if @rules.checkEndGame(@spots)
         #Game is won
-        puts "#{@rules.isWon(@spots).instance_variable_get(:@name)} has won the game!"
+        puts "#{@rules.isWon(@spots).instance_variable_get('@name')} has won the game!"
       else
         #Game is draw
         puts 'The game has ended in a draw!'
