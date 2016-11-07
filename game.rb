@@ -102,6 +102,10 @@ module Fanorona
       diagDir = 0
       y = 0
 
+      puts '  ' + (0..8).map{|i|
+        i.to_s
+      }.join(' ')
+
       while y < 5
         line = ''
         connections = ''
@@ -126,9 +130,11 @@ module Fanorona
           diagDir = ~diagDir
           x += 1
         end
+        print y, ' '
         puts line
 
         if y < 4
+          print '  '
           puts connections
         end
         y += 1
