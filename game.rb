@@ -9,7 +9,7 @@ module Fanorona
     def initialize(playerOneName, playerTwoName)
       @spots = Array.new(9) { Array.new(5) { Spot.new } }
       @players = [Player.new(playerOneName, @spots), Player.new(playerTwoName, @spots)]
-      @turn = 0 #"white player"
+      @turn = 1 #"white player"
       @currentPlayer = @players[@turn]
       @rules = Rule.new(3)
 
@@ -73,8 +73,13 @@ module Fanorona
             if @rules.checkMoveValidity(@currentPlayer, @spots[x][y], @spots[targetx][targety])
               # Move the piece
               @currentPlayer.makeMove(@spots[x][y], @spots[targetx][targety])
-            end
 
+              # Only rotate to the next player if the player's move was valid and not a capture
+              @turn = ~@turn
+              @currentPlayer = @players[@turn]
+            else
+              puts 'Invalid move'
+            end
           when :display
             next
           when :exit
@@ -82,10 +87,6 @@ module Fanorona
             exit
           else
         end
-
-        # Only rotate to the next player if the player's move wasn't a capture
-        @turn = ~@turn
-        @currentPlayer = @players[@turn]
       end
 
       if @rules.checkEndGame(@spots)
