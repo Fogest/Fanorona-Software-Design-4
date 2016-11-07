@@ -15,12 +15,19 @@ module Fanorona
     end
 
     def startGame
-      until @rules.checkEndGame(@spots) do
+      until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
 
 
         # Give the next player their turn
         @turn = ~@turn
         @currentPlayer = @players[@turn]
+      end
+      if @rules.checkEndGame(@spots)
+        #Game is won
+        puts "#{@rules.isWon(@spots).instance_variable_get(:@name)} has won the game!"
+      else
+        #Game is draw
+        puts 'The game has ended in a draw!'
       end
     end
   end

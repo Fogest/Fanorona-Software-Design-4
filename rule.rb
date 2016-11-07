@@ -15,56 +15,58 @@ module Fanorona
     end
 
     def checkEndGame(spots)
-      #Used to check if next piece found is the same player. If they are different
-      # then the game is not over as both players still have pieces.
-      firstFoundPlayer = nil
-      foundTwoPlayers = false
-      playerOnePieceCount = 0
-      playerTwoPieceCount = 0
-      spots.each_with_index do |x, xi|
-        x.each_with_index do |y, yi|
-          if spots[xi][yi].isEmpty
-            next
-          end
-
-          if firstFoundPlayer.nil?
-            firstFoundPlayer = spots[xi][yi].lookAtPiece.getPlayer
-            playerOnePieceCount += 1
-            next
-          end
-
-          if spots[xi][yi].lookAtPiece.getPlayer == firstFoundPlayer
-            playerOnePieceCount += 1
-            next
-          else
-            playerTwoPieceCount += 1
-            foundTwoPlayers = true
-          end
-        end
+      if self.isDraw(spots)
+        false
       end
-      if foundTwoPlayers
-        if playerOnePieceCount == 1 and playerTwoPieceCount == 1
-          @drawTimer -= 1
-        end
-        return isDraw(spots)
-      end
-
       true
     end
 
-    private
     def isDraw(spot)
-      if @drawTimer <= 0
+      if @drawtimer <= 0
         true
       end
       false
     end
 
-    private
     def isWon(spot)
-      #Useless function, we don't care who wins, we need to check if there is a win, and then
-      # have something that can say WHO won. Since this is a private function we don't need to
-      # know the who in it.
+      firstPlayer = nil
+      secondPlayer = nil
+      playerOnePieceCount = 0
+      playerTwoPieceCount = 0
+      spot.each_with_index do |x, xi|
+        x.each_with_index do |y, yi|
+          if spot[xo][yi].isEmpty
+            next
+          end
+
+          if firstPlayer.nil?
+            firstPlayer = spot[xi][yi].lookAtPiece.getPlayer
+            playerOnePieceCount += 1
+            next
+          end
+
+          if spot[xi][yi].lookAtPiece.getPlayer == firstPlayer
+            playerOnePieceCount += 1
+          else
+            if secondPlayer.nil?
+              secondPlayer = spot[xi][yi].lookAtPiece.getPlayer
+            end
+            playerTwoPieceCount += 1
+          end
+        end
+      end
+
+      if playerOnePieceCount == 1 and playerTwoPieceCount == 1
+        @drawTimer -= 1
+        nil
+      elsif playerOnePieceCount > 0 and playerTwoPieceCount > 0
+        nil
+      elsif playerOnePieceCount <= 0
+        secondPlayer
+      elsif playerTwoPieceCount <= 0
+        firstPlayer
+      end
+      nil
     end
   end
 end
