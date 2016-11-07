@@ -130,7 +130,7 @@ module Fanorona
 
         end
         #Else if numbers in range withdrawing and it is not the current players piece
-      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[approach_x][approach_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
+      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
         if makeCapture
           @spots[withdraw_x][withdraw_y].lookAtPiece.capture
         end
@@ -139,7 +139,7 @@ module Fanorona
           withdraw_x = withdraw_x - direction[0]
           withdraw_y = withdraw_y - direction[1]
 
-          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[approach_x][approach_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
+          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
             if makeCapture
               @spots[withdraw_x][withdraw_y].lookAtPiece.capture
             end
