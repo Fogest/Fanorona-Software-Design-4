@@ -70,11 +70,11 @@ module Fanorona
               next
             end
 
+            if @rules.checkMoveValidity(@currentPlayer, @spots[x][y], @spots[targetx][targety])
+              # Move the piece
+              @currentPlayer.makeMove(@spots[x][y], @spots[targetx][targety])
+            end
 
-          if @rules.checkMoveValidity(@currentPlayer, @spots[x][y], @spots[targetx][targety])
-            # Move the piece
-            @currentPlayer.makeMove(@spots[x][y], @spots[targetx][targety])
-          end
           when :display
             next
           when :exit
@@ -101,7 +101,7 @@ module Fanorona
       diagDir = 0
       y = 0
 
-      puts '  ' + (0..8).map{|i|
+      puts '  ' + (0..8).map { |i|
         i.to_s
       }.join(' ')
 
@@ -111,7 +111,7 @@ module Fanorona
         x = 0
         while x < 9
           spot = @spots[x][y]
-          if spot.lookAtPiece.nil?
+          if spot.lookAtPiece.nil? || spot.lookAtPiece.isCaptured
             line += '-'
           elsif @players.index(spot.lookAtPiece.getPlayer) == 0
             line += 'O'
