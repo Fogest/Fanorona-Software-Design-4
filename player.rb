@@ -107,7 +107,44 @@ module Fanorona
         end
       end
 
+      approach_x = dest_loc[0] + direction[0]
+      approach_y = dest_loc[1] + direction[1]
 
+      withdraw_x = source_loc[0] - direction[0]
+      withdraw_y = source_loc[1] - direction[1]
+
+      #If numbers in range approaching and it is not the current players piece
+      if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].piece.playerCallback != self
+        @spots[approach_x][approach_y].piece.capture
+        continuous = true
+        #Keep finding all until either out of range or it is no longer the opponents piece
+        while continuous == true do
+          approach_x = approach_x + direction[0]
+          approach_y = approach_y + direction[1]
+
+          if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].piece.playerCallback != self
+            @spots[approach_x][approach_y].piece.capture
+          else
+            continuous = false
+          end
+
+        end
+      #Else if numbers in range withdrawing and it is not the current players piece
+      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].piece.playerCallback != self
+        @spots[withdraw_x][withdraw_y].piece.capture
+        continuous = true
+        while continuous == true do
+          withdraw_x = withdraw_x - direction[0]
+          withdraw_y = withdraw_y - direction[1]
+
+          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].piece.playerCallback != self
+            @spots[withdraw_x][withdraw_y].piece.capture
+          else
+            continuous = false
+          end
+          
+        end
+      end
 
     end
 
