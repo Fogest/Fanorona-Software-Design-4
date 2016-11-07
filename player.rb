@@ -115,7 +115,9 @@ module Fanorona
 
       #If numbers in range approaching and it is not the current players piece
       if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
-        @spots[approach_x][approach_y].lookAtPiece.capture
+        if self.makeCapture == true
+          @spots[approach_x][approach_y].lookAtPiece.capture
+        end
         continuous = true
         #Keep finding all until either out of range or it is no longer the opponents piece
         while continuous == true do
@@ -123,7 +125,9 @@ module Fanorona
           approach_y = approach_y + direction[1]
 
           if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
-            @spots[approach_x][approach_y].lookAtPiece.capture
+            if self.makeCapture == true
+              @spots[approach_x][approach_y].lookAtPiece.capture
+            end
           else
             continuous = false
           end
@@ -131,18 +135,22 @@ module Fanorona
         end
       #Else if numbers in range withdrawing and it is not the current players piece
       elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
-        @spots[withdraw_x][withdraw_y].lookAtPiece.capture
+        if self.makeCapture == true
+          @spots[withdraw_x][withdraw_y].lookAtPiece.capture
+        end
         continuous = true
         while continuous == true do
           withdraw_x = withdraw_x - direction[0]
           withdraw_y = withdraw_y - direction[1]
 
           if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
-            @spots[withdraw_x][withdraw_y].lookAtPiece.capture            
+            if self.makeCapture == true
+              @spots[withdraw_x][withdraw_y].lookAtPiece.capture         
+            end
           else
             continuous = false
           end
-          
+
         end
       end
 
@@ -150,8 +158,7 @@ module Fanorona
 
     private
     def makeCapture
-
-
+      true
     end
   end
 end
