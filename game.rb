@@ -87,6 +87,7 @@ module Fanorona
             exit
           else
         end
+        puts
       end
 
       if @rules.checkEndGame(@spots)
