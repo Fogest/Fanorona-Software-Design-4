@@ -1,5 +1,4 @@
 require 'piece'
-require 'rule'
 
 module Fanorona
   class Player
@@ -15,24 +14,24 @@ module Fanorona
         while i < 2 do
           j = 0
           while j < 9 do
-            @spots[i][j] = @pieces[k]
+            @spots[j][i] = @pieces[k]
             k += 1
             j += 1
           end
           i += 1
         end
 
-        @spots[2][0] = @pieces[18]
+        @spots[0][2] = @pieces[18]
         @spots[2][2] = @pieces[19]
-        @spots[2][5] = @pieces[20]
-        @spots[2][7] = @pieces[21]
+        @spots[5][2] = @pieces[20]
+        @spots[7][2] = @pieces[21]
 
       else
 
-        @spots[2][1] = @pieces[0]
-        @spots[2][3] = @pieces[1]
-        @spots[2][6] = @pieces[2]
-        @spots[2][8] = @pieces[3]
+        @spots[1][2] = @pieces[0]
+        @spots[3][2] = @pieces[1]
+        @spots[6][2] = @pieces[2]
+        @spots[8][2] = @pieces[3]
 
         k = 4
         i = 3
@@ -40,7 +39,7 @@ module Fanorona
         while i < 5 do
           j = 0
           while j < 9 do
-            @spots[i][j] = @pieces[k]
+            @spots[j][i] = @pieces[k]
             k += 1
             j += 1
           end
@@ -56,7 +55,58 @@ module Fanorona
     end
 
     def makeMove(source, destination)
+      i = 0
+      j = 0
+      source_loc = Array.new(2)
+      dest_loc = Array.new(2)
 
+      while i < 5 do
+        while j < 9 do
+          if @spots[j][i] == source
+            source_loc[0] = j
+            source_loc[1] = i
+          end
+
+          if @spots[j][i] == destination
+            dest_loc[0] = j
+            dest_loc[1] = i
+          end
+        end
+      end
+
+      destination.place(source.take)
+
+      direction = Array.new(2)
+
+      if source_loc[1]==dest_loc[1]
+
+        if source_loc[0]<dest_loc[0]
+          direction = [1,0] #right
+        else
+          direction = [-1,0]  #left
+        end
+
+      elsif source_loc[1]<dest_loc[1]
+
+        if source_loc[0]<dest_loc[0]
+          direction = [1,1] #down-right
+        elsif source_loc[0]>dest_loc[0]
+          direction = [-1,1]  #down-left
+        else
+          direction = [0,1] #down
+        end
+
+      else
+
+        if source_loc[0]<dest_loc[0]
+          direction = [1,-1]  #up-right
+        elsif source_loc[0]>dest_loc[0]
+          direction = [-1,-1] #up-left
+        else
+          direction = [0,-1]  #up
+        end
+
+      end
 
     end
 
