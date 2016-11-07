@@ -4,10 +4,10 @@ require 'player'
 
 module Fanorona
   class Game
-    VALID_OPTIONS = ['move', 'exit']
+    VALID_OPTIONS = ['move', 'display', 'exit']
 
     def initialize(playerOneName, playerTwoName)
-      @spots = Array.new(5) { Array.new(9) { Spot.new } }
+      @spots = Array.new(9) { Array.new(5) { Spot.new } }
       @players = [Player.new(playerOneName, @spots), Player.new(playerTwoName, @spots)]
       @turn = rand(2) #TODO: Turn should start with the "white" player according to rules.
       @currentPlayer = @players[@turn]
@@ -18,6 +18,8 @@ module Fanorona
 
     def startGame
       until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
+        drawBoard
+
         puts "#{@currentPlayer.name}'s turn"
 
         begin
@@ -71,9 +73,11 @@ module Fanorona
 
 
           if @rules.checkMoveValidity(@currentPlayer, @spots[x][y], @spots[targetx][targety])
+            # Move the piece
             @currentPlayer.makeMove(@spots[x][y], @spots[targetx][targety])
           end
-          # Move the piece
+          when :display
+            next
           when :exit
             puts 'Game is exiting.'
             exit
@@ -84,12 +88,50 @@ module Fanorona
         @turn = ~@turn
         @currentPlayer = @players[@turn]
       end
+
       if @rules.checkEndGame(@spots)
         #Game is won
         puts "#{@rules.isWon(@spots).instance_variable_get(:@name)} has won the game!"
       else
         #Game is draw
         puts 'The game has ended in a draw!'
+      end
+    end
+
+    def drawBoard
+      diagDir = 0
+      y = 0
+
+      while y < 5
+        line = ''
+        connections = ''
+        x = 0
+        while x < 9
+          spot = @spots[x][y]
+          if spot.lookAtPiece.nil?
+            line += '-'
+          elsif @players.index(spot.lookAtPiece.getPlayer) == 0
+            line += 'O'
+          else
+            line += 'X'
+          end
+
+          connections += '|'
+
+          if x < 8
+            line += '-'
+            connections += ['\\', '/'][diagDir]
+          end
+
+          diagDir = ~diagDir
+          x += 1
+        end
+        puts line
+
+        if y < 4
+          puts connections
+        end
+        y += 1
       end
     end
   end
