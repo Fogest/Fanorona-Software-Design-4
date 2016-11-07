@@ -53,19 +53,19 @@ module Fanorona
     end
 
     def makeMove(source, destination)
-      i = 0
-      j = 0
       source_loc = Array.new(2)
       dest_loc = Array.new(2)
+      y = 0
 
       while y < 5 do
+        x = 0
         while x < 9 do
-          if @spots[j][i] == source
+          if @spots[x][y] == source
             source_loc[0] = x
             source_loc[1] = y
           end
 
-          if @spots[j][i] == destination
+          if @spots[x][y] == destination
             dest_loc[0] = x
             dest_loc[1] = y
           end
