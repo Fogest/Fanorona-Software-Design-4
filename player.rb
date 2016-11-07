@@ -5,7 +5,7 @@ module Fanorona
     def initialize(name, spots)
       @name = name
       @spots = spots
-      @pieces = Array.new(22) {Piece.new(self)}
+      @pieces = Array.new(22) { Piece.new(self) }
 
       if @spots[0][0].lookAtPiece.nil?
         k = 0
@@ -77,29 +77,29 @@ module Fanorona
       if source_loc[1]==dest_loc[1]
 
         if source_loc[0]<dest_loc[0]
-          direction = [1,0] #right
+          direction = [1, 0] #right
         else
-          direction = [-1,0]  #left
+          direction = [-1, 0] #left
         end
 
       elsif source_loc[1]<dest_loc[1]
 
         if source_loc[0]<dest_loc[0]
-          direction = [1,1] #down-right
+          direction = [1, 1] #down-right
         elsif source_loc[0]>dest_loc[0]
-          direction = [-1,1]  #down-left
+          direction = [-1, 1] #down-left
         else
-          direction = [0,1] #down
+          direction = [0, 1] #down
         end
 
       else
 
         if source_loc[0]<dest_loc[0]
-          direction = [1,-1]  #up-right
+          direction = [1, -1] #up-right
         elsif source_loc[0]>dest_loc[0]
-          direction = [-1,-1] #up-left
+          direction = [-1, -1] #up-left
         else
-          direction = [0,-1]  #up
+          direction = [0, -1] #up
         end
       end
 
@@ -110,7 +110,7 @@ module Fanorona
       withdraw_y = source_loc[1] - direction[1]
 
       #If numbers in range approaching and it is not the current players piece
-      if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
+      if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
         if makeCapture
           @spots[approach_x][approach_y].lookAtPiece.capture
         end
@@ -120,7 +120,7 @@ module Fanorona
           approach_x = approach_x + direction[0]
           approach_y = approach_y + direction[1]
 
-          if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
+          if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
             if makeCapture
               @spots[approach_x][approach_y].lookAtPiece.capture
             end
@@ -129,8 +129,8 @@ module Fanorona
           end
 
         end
-      #Else if numbers in range withdrawing and it is not the current players piece
-      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
+        #Else if numbers in range withdrawing and it is not the current players piece
+      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[approach_x][approach_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
         if makeCapture
           @spots[withdraw_x][withdraw_y].lookAtPiece.capture
         end
@@ -139,9 +139,9 @@ module Fanorona
           withdraw_x = withdraw_x - direction[0]
           withdraw_y = withdraw_y - direction[1]
 
-          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
+          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[approach_x][approach_y].lookAtPiece && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
             if makeCapture
-              @spots[withdraw_x][withdraw_y].lookAtPiece.capture         
+              @spots[withdraw_x][withdraw_y].lookAtPiece.capture
             end
           else
             continuous = false
