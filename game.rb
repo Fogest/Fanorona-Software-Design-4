@@ -4,6 +4,7 @@ require 'player'
 
 module Fanorona
   class Game
+    VALID_OPTIONS = ['move', 'exit']
     def initialize(playerOneName, playerTwoName)
       @spots = Array.new(9) { Array.new(5) {Spot.new} }
       @players = [Player.new(playerOneName, @spots), Player.new(playerTwoName, @spots)]
@@ -16,9 +17,38 @@ module Fanorona
 
     def startGame
       until !@rules.isWon(@spots).nil? or @rules.isDraw(@spots) do
+        puts "#{@currentPlayer.name}'s turn"
 
+        begin
+          print '> '
+          input = STDIN.gets.chomp
+          tokens = input.split(' ')
+        end until VALID_OPTIONS.include?(tokens[0])
 
-        # Give the next player their turn
+        command = tokens[0].to_sym
+
+        case command
+          when :move
+            if tokens.length != 4
+              puts 'Invalid input'
+              next
+            elsif !%w(n ne e se s sw w).include?(tokens[3])
+              puts 'Invalid direction provided.'
+              next
+            end
+
+            x, y = tokens[1].to_i, tokens[2].to_i
+            direction = tokens[3].to_sym
+
+            # Validate the move
+            # Move the piece
+          when :exit
+            puts 'Game is exiting.'
+            exit
+          else
+        end
+
+        # Only rotate to the next player if the player's move wasn't a capture
         @turn = ~@turn
         @currentPlayer = @players[@turn]
       end

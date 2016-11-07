@@ -20,7 +20,7 @@ module Fanorona
     end
 
     def isDraw(spot)
-      if @drawtimer <= 0
+      if @drawTimer <= 0
         true
       end
       false
@@ -33,7 +33,7 @@ module Fanorona
       playerTwoPieceCount = 0
       spot.each_with_index do |x, xi|
         x.each_with_index do |y, yi|
-          if spot[xo][yi].isEmpty
+          if spot[xi][yi].isEmpty
             next
           end
 
