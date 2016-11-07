@@ -114,7 +114,7 @@ module Fanorona
       withdraw_y = source_loc[1] - direction[1]
 
       #If numbers in range approaching and it is not the current players piece
-      if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.playerCallback != self
+      if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
         @spots[approach_x][approach_y].lookAtPiece.capture
         continuous = true
         #Keep finding all until either out of range or it is no longer the opponents piece
@@ -122,7 +122,7 @@ module Fanorona
           approach_x = approach_x + direction[0]
           approach_y = approach_y + direction[1]
 
-          if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.playerCallback != self
+          if (0..8) === approach_x && (0..4) === approach_y && @spots[approach_x][approach_y].lookAtPiece.getPlayer != self
             @spots[approach_x][approach_y].lookAtPiece.capture
           else
             continuous = false
@@ -130,14 +130,14 @@ module Fanorona
 
         end
       #Else if numbers in range withdrawing and it is not the current players piece
-      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.playerCallback != self
+      elsif (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
         @spots[withdraw_x][withdraw_y].lookAtPiece.capture
         continuous = true
         while continuous == true do
           withdraw_x = withdraw_x - direction[0]
           withdraw_y = withdraw_y - direction[1]
 
-          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.playerCallback != self
+          if (0..8) === withdraw_x && (0..4) === withdraw_y && @spots[withdraw_x][withdraw_y].lookAtPiece.getPlayer != self
             @spots[withdraw_x][withdraw_y].lookAtPiece.capture            
           else
             continuous = false
