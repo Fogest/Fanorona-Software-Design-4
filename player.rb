@@ -7,31 +7,31 @@ module Fanorona
       @spots = spots
       @pieces = Array.new(22) {Piece.new(self)}
 
-      if @spots[0][0] == nil
+      if @spots[0][0].lookAtPiece.nil?
         k = 0
         i = 0
 
         while i < 2 do
           j = 0
           while j < 9 do
-            @spots[j][i] = @pieces[k]
+            @spots[j][i].place(@pieces[k])
             k += 1
             j += 1
           end
           i += 1
         end
 
-        @spots[0][2] = @pieces[18]
-        @spots[2][2] = @pieces[19]
-        @spots[5][2] = @pieces[20]
-        @spots[7][2] = @pieces[21]
+        @spots[0][2].place(@pieces[18])
+        @spots[2][2].place(@pieces[19])
+        @spots[5][2].place(@pieces[20])
+        @spots[7][2].place(@pieces[21])
 
       else
 
-        @spots[1][2] = @pieces[0]
-        @spots[3][2] = @pieces[1]
-        @spots[6][2] = @pieces[2]
-        @spots[8][2] = @pieces[3]
+        @spots[1][2].place(@pieces[0])
+        @spots[3][2].place(@pieces[1])
+        @spots[6][2].place(@pieces[2])
+        @spots[8][2].place(@pieces[3])
 
         k = 4
         i = 3
@@ -39,7 +39,7 @@ module Fanorona
         while i < 5 do
           j = 0
           while j < 9 do
-            @spots[j][i] = @pieces[k]
+            @spots[j][i].place(@pieces[k])
             k += 1
             j += 1
           end

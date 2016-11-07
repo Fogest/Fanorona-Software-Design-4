@@ -33,7 +33,7 @@ module Fanorona
       playerTwoPieceCount = 0
       spot.each_with_index do |x, xi|
         x.each_with_index do |y, yi|
-          if spot[xi][yi].isEmpty
+          if spot[xi][yi].nil? || spot[xi][yi].isEmpty
             next
           end
 
