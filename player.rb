@@ -45,9 +45,7 @@ module Fanorona
           end
           i += 1
         end
-
       end
-
     end
 
     def name
@@ -60,18 +58,20 @@ module Fanorona
       source_loc = Array.new(2)
       dest_loc = Array.new(2)
 
-      while i < 5 do
-        while j < 9 do
+      while y < 5 do
+        while x < 9 do
           if @spots[j][i] == source
-            source_loc[0] = j
-            source_loc[1] = i
+            source_loc[0] = x
+            source_loc[1] = y
           end
 
           if @spots[j][i] == destination
-            dest_loc[0] = j
-            dest_loc[1] = i
+            dest_loc[0] = x
+            dest_loc[1] = y
           end
+          x += 1
         end
+        y += 1
       end
 
       destination.place(source.take)
@@ -105,8 +105,9 @@ module Fanorona
         else
           direction = [0,-1]  #up
         end
-
       end
+
+
 
     end
 
