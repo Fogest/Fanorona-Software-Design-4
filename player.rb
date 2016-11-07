@@ -51,6 +51,10 @@ module Fanorona
 
     end
 
+    def name
+      @name
+    end
+
     def makeMove(source, destination)
 
 
